@@ -1,8 +1,11 @@
 {
   "name": "broccoli",
   "description": "Fast client-side asset builder",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "author": "Jo Liss <joliss42@gmail.com>",
+  "contributors": [
+    "Mike M Pestorich <mike@swarmbox.com> (http://www.swarmbox.com/)"
+  ],
   "main": "lib/index.js",
   "license": "MIT",
   "repository": {
@@ -23,10 +26,13 @@
     "handlebars": "~1.1.2",
     "watch": "~0.8.0",
     "jshashes": "~1.0.4",
-    "commander": "~2.0.0",
-    "findup-sync": "~0.1.2"
+    "commander": "~2.1.0",
+    "findup-sync": "~0.1.2",
+    "config": "~0.4.33",
+    "iz": "~0.3.0"
   },
   "devDependencies": {
     "jshint": "~2.3.0"
-  }
+  },
+  "bin": "./lib/cli.js"
 }
