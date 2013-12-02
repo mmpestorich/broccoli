@@ -31,7 +31,7 @@ module.exports = {
           ],
           legacyFilesToAppend: [
             'jquery.js',
-            'handlebars.runtime.js',
+            'handlebars.js',
             'ember.js',
             'ember-data.js',
             'ember-resolver.js'
