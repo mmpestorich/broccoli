@@ -27,11 +27,10 @@
     "watch": "~0.8.0",
     "jshashes": "~1.0.4",
     "commander": "~2.1.0",
-    "findup-sync": "~0.1.2",
     "config": "~0.4.33",
     "iz": "~0.3.0",
     "jsdom": "~0.8.9",
-    "jquery": "~2.1.0-beta2"
+    "osenv": "0.0.3"
   },
   "devDependencies": {
     "jshint": "~2.3.0"
