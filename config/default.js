@@ -5,10 +5,7 @@ module.exports = {
       {
         type: 'ES6TemplatePreprocessor',
         options: {
-          extensions: [
-            'handlebars',
-            'hbs'
-          ],
+          extensions: [ 'handlebars', 'hbs' ],
           compileFunction: 'Ember.Handlebars.compile'
         }
       },
@@ -19,38 +16,32 @@ module.exports = {
             bare: true
           }
         }
-      },
-      {
-        type: 'ES6TranspilerPreprocessor'
       }
     ],
     compilers: [
       {
-        type: 'JavaScriptConcatenationCompiler',
+        type: 'ES6ConcatenationCompiler',
         options: {
-          outputPath: 'app.js',
-          useSourceURL: false, // s/b minify, uglify, etc...
-          files: [
+          loaderFile: 'almond.js',
+          ignoredModules: [
+            'resolver'
+          ],
+          inputFiles: [
             'appkit/**/*.js'
-          ]
-        }
-      },
-      {
-        type: 'StaticFileCompiler',
-        options: {
-          files: [
-            'modernizr.js',
-            'almond.js',
-            'bootstrap.js',
+          ],
+          legacyFilesToAppend: [
             'jquery.js',
             'handlebars.runtime.js',
             'ember.js',
             'ember-data.js',
-            'ember-resolver.js',
-            'index.html'
-          ]
+            'ember-resolver.js'
+          ],
+          outputFile: 'app.js'
         }
       }
+    ],
+    staticFiles: [
+      'index.html'
     ],
     useBower: true
   }

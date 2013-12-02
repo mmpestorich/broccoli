@@ -16,10 +16,10 @@ module.exports = function (broccoli) {
   var packages = [assetsPackage].concat(bowerPackages)
   var packageReader = new broccoli.readers.PackageReader(packages)
 
-  var compilerCollection = new broccoli.transformers.compilers.CompilerCollection({
+  var compilerCollection = new broccoli.transformers.compilers.CompilerPipeline({
     staticFiles: ['index.html'],
     compilers: [
-      new broccoli.transformers.compilers.ES6ConcatenatorCompiler({
+      new broccoli.transformers.compilers.ES6ConcatenationCompiler({
         loaderFile: 'almond.js', // make this a default
         ignoredModules: [
           'resolver'
