@@ -1,28 +1,121 @@
-# Broccoli
+# Broccoli (SwarmBox Branch)
 
-[![Build Status](https://travis-ci.org/joliss/broccoli.png?branch=master)](https://travis-ci.org/joliss/broccoli)
+This is a branch of [Broccoli](https://github.com/joliss/broccoli).
 
-A fast, reliable asset builder & server. Hard-coded to build Ember apps for
-now, to be generalized later.
+## Extend and Customize the Build Pipeline
+Instead of the Broccolifile and Stirfry files, this branch uses node-config allowing easier customization of the
+preprocessor and compile pipelines. Add 'config/default.json' to the root of your project with contents similar to the
+following:
+
+```js
+module.exports = {
+  broccoli: {
+    src: 'assets',
+    out: '/tmp',
+    preprocessors: [
+      {
+        type: 'ES6TemplatePreprocessor',
+        options: {
+          extensions: [ 'handlebars', 'hbs' ],
+          compileFunction: 'Ember.Handlebars.compile'
+        }
+      },
+      {
+        type: 'CoffeeScriptPreprocessor',
+        options: {
+          options: {
+            bare: true
+          }
+        }
+      }
+    ],
+    compilers: [
+      {
+        type: 'ES6ConcatenationCompiler',
+        options: {
+          loaderFile: 'almond.js',
+          ignoredModules: [
+            'resolver'
+          ],
+          inputFiles: [
+            'appkit/**/*.js'
+          ],
+          legacyFilesToAppend: [
+            'jquery.js',
+            'handlebars.runtime.js',
+            'ember.js',
+            'ember-data.js',
+            'ember-resolver.js'
+          ],
+          outputFile: 'app.js'
+        }
+      }
+    ],
+    staticFiles: [
+      'index.html'
+    ],
+    useBower: true
+  }
+};
+```
+
+## Builder uses a sensible output Directory for Live-Compiled Files
+Saving compiled files to a temporary broccoli folder with a name that changes every time you launch the express server
+can cause problems with indexing and code completion in some IDEs (such as IntelliJ) as there is no reliable way to
+exclude that temp folder from the project sources. By specifying 'out' in the config file you can locate the build
+folder elsewhere. The build option to the cli will still place output files into a public folder in the root of your
+project.
+
+## Pre-Compiled Ember Templates
+Templates are no longer compiled by the client in the browser, they are pre-compiled by default by the
+PreprocessorPipeline. This allows the smaller handlebars.runtime.js file can be used instead of the full blown
+handlebars.js file. For example, in your app.js, instead of seeing something like:
+
+```js
+Ember.Handlebars.compile("<ul>\n{{#each}}\n  <li>{{this}}</li>\n{{/each}}\n</ul>\n");
+```
+
+...you will see instead the compiled template...
+
+```js
+Ember.Handlebars.template(function anonymous(Handlebars, depth0, helpers, partials, data) {
+  this.compilerInfo = [4, '>= 1.0.0'];
+  helpers = this.merge(helpers, Ember.Handlebars.helpers);
+  data = data || {};
+  var buffer = '', stack1, hashTypes, hashContexts, escapeExpression = this.escapeExpression, self = this;
+
+  function program1(depth0, data) {
+    var buffer = '', hashTypes, hashContexts;
+    data.buffer.push("\n  <li>");
+    hashTypes = {};
+    hashContexts = {};
+    data.buffer.push(escapeExpression(helpers._triageMustache.call(depth0, "", {hash: {}, contexts: [depth0], types: ["ID"], hashContexts: hashContexts, hashTypes: hashTypes, data: data})));
+    data.buffer.push("</li>\n");
+    return buffer;
+  }
+
+  data.buffer.push("<ul>\n");
+  hashTypes = {};
+  hashContexts = {};
+  stack1 = helpers.each.call(depth0, {hash: {}, inverse: self.noop, fn: self.program(1, program1, data), contexts: [], types: [], hashContexts: hashContexts, hashTypes: hashTypes, data: data});
+  if (stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\n</ul>\n");
+  return buffer;
+
+});
+```
+
+The original [README](https://github.com/joliss/broccoli/blob/master/README.md)
+
+A fast, reliable asset builder & server.
+
+For the command line interface, see [broccoli-cli](https://github.com/joliss/broccoli-cli).
+
+For a sample app, see [broccoli-sample-app](https://github.com/joliss/broccoli-sample-app).
 
 **This is pre-alpha work-in-progress. It's not usable for building actual JavaScript applications yet.**
 
 Windows is not yet supported.
-
-To open the preview server, type:
-
-```
-npm install -g bower
-bower install
-npm install
-node lib/cli.js serve
-```
-
-Or to run a one-off build, type:
-
-```
-node lib/cli.js build public
-```
 
 Design goals:
 
