@@ -1,11 +1,34 @@
-# Broccoli (SwarmBox Branch)
+# Asparagus (a fork of Broccoli)
 
-This is a branch of [Broccoli](https://github.com/joliss/broccoli).
+This started as a branch of [Broccoli](https://github.com/joliss/broccoli). It is based on some of the same ideas,
+structure and code but has sense diverged in the following ways:
 
-## Extend and Customize the Build Pipeline
-Instead of the Broccolifile and Stirfry files, this branch uses node-config allowing easier customization of the
-preprocessor and compile pipelines. Add 'config/default.json' to the root of your project with contents similar to the
-following:
+- Configuration is done via asparagus.json
+- Uses an in-memory cache instead of one on disk
+- Temporary build output is configurable
+- Allows multiple source roots and an output file per root if desired
+- Formalizes an interface for Preprocessors and Compilers
+  - Preprocessors:
+  	- LessPreprocessor
+  	- ScssPreprocessor
+  	- CoffeeScriptPreprocessor
+  	- LicensePreprocessor
+  	- StripDebugPreprocessor
+  	- EmberHandlebarsPreprocessor (precompiles handlebars templates)
+  - Compilers
+  	- JavaScriptConcatenateCompiler
+    - ES6ConcatenateCompiler
+    - JavaScriptMinifyCompiler
+    - JavaScriptUglifyCompiler
+  - Copy Files (compiled files and static files)
+- Watch for changes with node-fsevents (on OS X)
+- (Planned) Watch for changes with node-inotify (on Linux)
+- (Planned) Only process changes files rather that rebuilding everything
+
+
+## Configuration
+Configuration is done by adding an 'asparagus.json' file to the root of your project with the following format (options
+are explained further below):
 
 ```js
 module.exports = {
