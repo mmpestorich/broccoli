@@ -21,15 +21,4 @@ class CompilerPipeline extends Transformer
     (err) ->
       callback(err)
 
-  copyStaticFiles: (srcDir, destDir, staticFiles) ->
-    paths = helpers.multiGlob staticFiles, cwd: srcDir
-
-    for _path in paths
-      srcPath = path.join(srcDir, _path)
-      destPath = path.join(destDir, _path)
-      contents = fs.readFileSync(srcPath)
-
-    mkdirp.sync(path.dirname(destPath))
-    fs.writeFileSync(destPath, contents)
-
 exports = CompilerPipeline

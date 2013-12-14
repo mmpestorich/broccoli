@@ -14,8 +14,8 @@ structure and code but has sense diverged in the following ways:
   	- CoffeeScriptPreprocessor
   	- LicensePreprocessor
   	- StripDebugPreprocessor
-  	- EmberHandlebarsPreprocessor (precompiles handlebars templates)
   - Compilers
+    - EmberTemplateCompiler (precompiles handlebars templates)
   	- JavaScriptConcatenateCompiler
     - ES6ConcatenateCompiler
     - JavaScriptMinifyCompiler

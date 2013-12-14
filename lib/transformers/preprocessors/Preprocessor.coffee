@@ -2,6 +2,8 @@ Filter = require './../../Filter'
 
 class Preprocessor extends Filter
 
+module.exports = Preprocessor
+
 #var fs = require('fs');
 #var path = require('path');
 #var glob = require('glob');

@@ -77,4 +77,4 @@ wrapInEval = (fileContents, fileName) ->
   # Eventually we want source maps instead of sourceURL
   return "eval('#{jsStringEscape(fileContents)} //#sourceURL=#{jsStringEscape(fileName)}');\n";
 
-exports = ES6ConcatenationCompiler
+module.exports = ES6ConcatenationCompiler

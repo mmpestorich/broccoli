@@ -5,7 +5,7 @@ synchronized = require 'synchronized'
 Filter = require './Filter'
 Pipeline = require './Pipeline'
 
-serve = (project, addr, port) ->
+serve = (project, addr = '127.0.0.1', port = 8000) ->
 #  statsHash = null;
 #
 #  checkForUpdates = () ->
@@ -26,7 +26,8 @@ serve = (project, addr, port) ->
 #    process: (context) ->
 #      context.value += 'TestFilter2 '
 
-  Pipeline::process project, project.preprocessors
+  for pkg in project.packages
+    Pipeline::process pkg, pkg.preprocessors
 
   console.log "Serving on http://#{addr}:#{port}/\n"
 

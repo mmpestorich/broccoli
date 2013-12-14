@@ -1,10 +1,9 @@
 EmberHandlebars = require('./../../../vendor/ember-template-compiler.js').EmberHandlebars;
-Preprocessor = require './Preprocessor'
+Compiler = require './Compiler'
 
-class EmberHandlebarsPreprocessor extends Preprocessor
+class EmberTemplateCompiler extends Compiler
   constructor: () ->
-    @compileFunction = ''
-    @extensions = []
+    @extensions = [ 'hbs', 'handlebars' ]
     @targetExtension = 'js'
 
   process: () ->
@@ -14,4 +13,4 @@ class EmberHandlebarsPreprocessor extends Preprocessor
     fs.writeFileSync(destFilePath, moduleContents)
     callback()
 
-module.exports = EmberHandlebarsPreprocessor;
+module.exports = EmberTemplateCompiler

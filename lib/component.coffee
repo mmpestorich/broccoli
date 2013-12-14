@@ -3,6 +3,7 @@ mktemp = require('mktemp');
 rimraf = require('rimraf');
 
 class Component
+  
   constructor: (options) ->
     for own key, value of options
       @[key] = value
